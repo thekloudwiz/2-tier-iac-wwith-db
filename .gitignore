@@ -129,7 +129,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-*.tfvars
 *.tfstate
 *.tfstate.backup
 
@@ -163,10 +162,10 @@ tfplan.json
 # environments/*
 # environments/
 
-# Ignore files in the s3 folder
-s3/*
-s3/policies/*
-github-oidc.tf
-local.tf
-report-bucket.tf
-state-bucket.tf
+# # Ignore files in the s3 folder
+# s3/*
+# s3/policies/*
+# github-oidc.tf
+# local.tf
+# report-bucket.tf
+# state-bucket.tf
