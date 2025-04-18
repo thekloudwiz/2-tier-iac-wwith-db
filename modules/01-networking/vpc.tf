@@ -20,7 +20,7 @@ resource "aws_internet_gateway" "igw" {
   })
 }
 
-# Create 2 public subnets
+# Create public subnets
 resource "aws_subnet" "public" {
   count                   = 2
   vpc_id                  = aws_vpc.main.id
@@ -35,40 +35,32 @@ resource "aws_subnet" "public" {
   })
 }
 
-# Create 2 private subnets
-resource "aws_subnet" "private" {
+# Create App Private Subnets
+resource "aws_subnet" "app_private" {
+  count             = var.availability_zones_count
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + var.availability_zones_count * 2)
+  availability_zone = element(data.aws_availability_zones.available.names, count.index)
+
+  tags = merge(local.common_tags, {
+    Name                     = "${local.app_private_subnet_name}-${count.index + 1}"
+    "kubernetes.io/role/elb" = "1" # For EKS if needed later
+    "Type"                   = "Private"
+  })
+}
+
+# Create DB Private subnets 
+resource "aws_subnet" "db_private" {
   count             = var.availability_zones_count
   vpc_id            = aws_vpc.main.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + var.availability_zones_count)
   availability_zone = element(data.aws_availability_zones.available.names, count.index)
 
   tags = merge(local.common_tags, {
-    Name                     = "${local.private_subnet_name}-${count.index + 1}"
+    Name                     = "${local.db_private_subnet_name}-${count.index + 1}"
     "kubernetes.io/role/elb" = "1" # For EKS if needed later
     "Type"                   = "Private"
   })
-}
-
-
-# NAT Gateway
-resource "aws_eip" "nat_eip" {
-  domain = "vpc"
-
-  tags = merge(local.common_tags, {
-    Name = "${local.name_prefix}-nat-eip"
-  })
-}
-
-# Create NAT Gateway
-resource "aws_nat_gateway" "nat" {
-  allocation_id = aws_eip.nat_eip.id
-  subnet_id     = aws_subnet.public[0].id
-
-  tags = merge(local.common_tags, {
-    Name = "${local.name_prefix}-nat"
-  })
-
-  depends_on = [aws_eip.nat_eip]
 }
 
 

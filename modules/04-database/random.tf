@@ -5,5 +5,5 @@ resource "random_password" "rds" {
   upper            = true
   lower            = true
   numeric          = true
-  override_special = "_%@"
+  override_special = "_%#!$^&*"
 }

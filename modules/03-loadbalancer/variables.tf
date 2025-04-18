@@ -48,6 +48,12 @@ variable "redirect_port" {
   type        = number
 }
 
+# Target Group Target Type
+variable "target_type" {
+  description = "Target type for the target group"
+  type        = string
+}
+
 # ALB Type
 variable "alb_type" {
   description = "Type of the ALB"

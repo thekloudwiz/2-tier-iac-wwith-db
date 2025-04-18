@@ -1,19 +1,29 @@
+# Provisions AWS MSK and ElastiCache Redis resources
+# This module provisions AWS MSK and ElastiCache Redis resources
+
+# MSK Cluster
 resource "aws_msk_cluster" "kafka" {
   cluster_name           = local.cluster_name
   kafka_version          = var.kafka_version
-  number_of_broker_nodes = var.broker_nodes
+  number_of_broker_nodes = var.availability_zones_count
+
+  tags                   = merge(local.common_tags,
+    {
+      Name = "${local.cluster_name}"
+  })
 
   broker_node_group_info {
     instance_type   = "kafka.t3.small"
-    client_subnets  = split(",", data.aws_ssm_parameter.private_subnet_ids.value)
+    client_subnets  = split(",", data.aws_ssm_parameter.db_private_subnet_ids.value)
     security_groups = [data.aws_ssm_parameter.kafka_sg_id.value]
   }
 }
 
+# ElastiCache Redis
 resource "aws_elasticache_cluster" "redis" {
   cluster_id           = local.redis_cluster_id
   engine               = var.elasticache_engine
-  node_type            = var.node_type
+  node_type            = var.elasticache_node_type
   num_cache_nodes      = 1
   parameter_group_name = var.parameter_group_name
   port                 = var.elasticache_port
@@ -23,12 +33,12 @@ resource "aws_elasticache_cluster" "redis" {
 
 resource "aws_elasticache_subnet_group" "redis" {
   name       = local.subnet_group_name
-  subnet_ids = split(",", data.aws_ssm_parameter.private_subnet_ids.value)
+  subnet_ids = split(",", data.aws_ssm_parameter.db_private_subnet_ids.value)
   tags = merge(local.common_tags,
     {
       Name = "${local.subnet_group_name}"
   })
-  depends_on = [data.aws_ssm_parameter.private_subnet_ids]
+  depends_on = [data.aws_ssm_parameter.db_private_subnet_ids]
 
   lifecycle {
     create_before_destroy = true

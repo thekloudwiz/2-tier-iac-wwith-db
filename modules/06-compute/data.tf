@@ -22,7 +22,7 @@ data "aws_ssm_parameter" "admin_sg_id" {
 
 # Fetch Security ALB Security Group IDs from SSM Parameter Store
 data "aws_ssm_parameter" "alb_sg_id" {
-  name = "/${local.name_prefix}/asg_sg_id"
+  name = "/${local.name_prefix}/alb_sg_id"
 }
 
 # Fetch Subnet IDS from SSM Parameter Store
@@ -31,8 +31,8 @@ data "aws_ssm_parameter" "public_subnet_ids" {
 }
 
 # Fetch Private Subnet IDs from SSM Parameter Store
-data "aws_ssm_parameter" "private_subnet_ids" {
-  name = "/${local.name_prefix}/private_subnet_ids"
+data "aws_ssm_parameter" "app_private_subnet_ids" {
+  name = "/${local.name_prefix}/app_private_subnet_ids"
 }
 
 data "aws_iam_instance_profile" "admin_profile" {
@@ -51,4 +51,6 @@ data "aws_ssm_parameter" "asg_sg_id" {
 # Fetch Target Group ARN from SSM Parameter Store
 data "aws_ssm_parameter" "alb_target_group_arn" {
   name = "/${local.name_prefix}/alb_target_group_arn"
+
+
 }

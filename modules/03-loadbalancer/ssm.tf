@@ -5,6 +5,8 @@ resource "aws_ssm_parameter" "alb_target_group_arn" {
   value = aws_lb_target_group.alb_target_group.arn
 
   tags = local.common_tags
+
+  depends_on = [aws_lb_target_group.alb_target_group]
 }
 
 resource "aws_ssm_parameter" "alb_arn" {

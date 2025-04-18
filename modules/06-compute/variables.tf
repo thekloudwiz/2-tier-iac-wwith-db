@@ -30,15 +30,15 @@ variable "project_name" {
   type        = string
 }
 
-# EC2 Instance Class
-variable "ec2_instance_class" {
-  description = "EC2 instance class"
+# Target Group Target Type
+variable "target_type" {
+  description = "Target type for the target group"
   type        = string
 }
 
-# key pair name
-variable "keypair_name" {
-  description = "Key pair name for EC2 instances"
+# EC2 Instance Class
+variable "ec2_instance_class" {
+  description = "EC2 instance class"
   type        = string
 }
 

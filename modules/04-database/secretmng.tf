@@ -20,10 +20,10 @@ resource "aws_secretsmanager_secret_version" "rds" {
   })
 }
 
-# Enable secret rotation using AWS managed Lambda
-resource "aws_secretsmanager_secret_rotation" "rotation" {
-  secret_id = aws_secretsmanager_secret.rds.id
-  rotation_rules {
-    automatically_after_days = 30
-  }
-}
+# # Enable secret rotation using AWS managed Lambda
+# resource "aws_secretsmanager_secret_rotation" "rotation" {
+#   secret_id = aws_secretsmanager_secret.rds.id
+#   rotation_rules {
+#     automatically_after_days = 30
+#   }
+# }

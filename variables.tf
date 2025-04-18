@@ -208,11 +208,17 @@ variable "ec2_instance_type" {
   type        = string
 }
 
-# Keypair name
-variable "keypair_name" {
-  description = "Key pair name for EC2 instances"
+# Target Group Target Type
+variable "target_type" {
+  description = "Target type for the target group"
   type        = string
 }
+
+# Keypair name
+# variable "keypair_name" {
+#   description = "Key pair name for EC2 instances"
+#   type        = string
+# }
 
 # EC2 Instance Count
 variable "ec2_instance_count" {
@@ -281,14 +287,8 @@ variable "ec2_instance_ebs_optimized" {
 
 }
 
-# Kafka Broker Nodes
-variable "kafka_broker_nodes" {
-  description = "Number of broker nodes"
-  type        = number
-}
-
-# Kafka Node Type
-variable "kafka_node_type" {
+# ElastiCache Node Type
+variable "elasticache_node_type" {
   description = "Node type for the cluster"
   type        = string
 }
@@ -308,6 +308,12 @@ variable "kafka_version" {
 # AWS ElastiCache Engine
 variable "elasticache_engine" {
   description = "Cluster engine for the ElastiCache cluster"
+  type        = string
+}
+
+# Kafka Instance Type
+variable "kafka_instance_type" {
+  description = "Instance type for the Kafka cluster"
   type        = string
 }
 

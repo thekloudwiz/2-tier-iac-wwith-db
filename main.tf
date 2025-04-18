@@ -46,6 +46,7 @@ module "security" {
 module "load_balancer" {
   source                = "./modules/03-loadbalancer"
   alb_type              = var.alb_type
+  target_type           = var.target_type
   health_check_port     = var.health_check_port
   health_check_protocol = var.health_check_protocol
   redirect_port         = var.redirect_port
@@ -102,6 +103,7 @@ module "iam" {
 module "compute" {
   source                                = "./modules/06-compute"
   asg_config                            = var.asg_config
+  target_type = var.target_type
   ec2_instance_count                    = var.ec2_instance_count
   ec2_instance_type                     = var.ec2_instance_type
   ec2_instance_class                    = var.ec2_instance_class
@@ -111,31 +113,30 @@ module "compute" {
   ec2_instance_ebs_optimized            = var.ec2_instance_ebs_optimized
   ec2_instance_monitoring               = var.ec2_instance_monitoring
   iam_instance_profile                  = var.iam_instance_profile
-  keypair_name                          = var.keypair_name
-  launch_template_name                  = var.launch_template_name
-  environment                           = var.environment
-  project_name                          = var.project_name
-  managed_by                            = var.managed_by
-  owner                                 = var.owner
-  region                                = var.region
-
-  depends_on = [module.networking, module.security]
-}
-
-# Create Services Module
-module "services" {
-  source               = "./modules/07-services"
-  elasticache_engine   = var.elasticache_engine
-  elasticache_port     = var.elasticache_port
-  kafka_version        = var.kafka_version
-  broker_nodes         = var.kafka_broker_nodes
-  node_type            = var.kafka_node_type
-  parameter_group_name = var.elasticache_parameter_group_name
+  launch_template_name = var.launch_template_name
   environment          = var.environment
   project_name         = var.project_name
   managed_by           = var.managed_by
   owner                = var.owner
   region               = var.region
+
+  depends_on = [module.networking, module.security, module.load_balancer]
+}
+
+# Create Services Module
+module "services" {
+  source                   = "./modules/07-services"
+  elasticache_engine       = var.elasticache_engine
+  elasticache_port         = var.elasticache_port
+  kafka_version            = var.kafka_version
+  availability_zones_count = var.availability_zones_count
+  elasticache_node_type    = var.elasticache_node_type
+  parameter_group_name     = var.elasticache_parameter_group_name
+  environment              = var.environment
+  project_name             = var.project_name
+  managed_by               = var.managed_by
+  owner                    = var.owner
+  region                   = var.region
 
   depends_on = [module.networking, module.security]
 }

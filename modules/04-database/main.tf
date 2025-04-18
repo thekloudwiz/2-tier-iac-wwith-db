@@ -3,12 +3,13 @@
 # Create Subnet Group
 resource "aws_db_subnet_group" "rds" {
   name       = local.db_subnet_group_name
-  subnet_ids = split(",", data.aws_ssm_parameter.private_subnet_ids.value)
+  subnet_ids = split(",", data.aws_ssm_parameter.db_private_subnet_ids.value)
 }
 
 # Create DB Instance
 resource "aws_db_instance" "rds" {
   allocated_storage      = var.db_storage_size
+  identifier             = local.db_identifier
   engine                 = var.db_engine
   instance_class         = var.db_instance_class
   username               = local.db_creds.username

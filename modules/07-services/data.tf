@@ -4,8 +4,8 @@ data "aws_ssm_parameter" "public_subnet_ids" {
 }
 
 # Fetch Private Subnet IDs from SSM Parameter Store
-data "aws_ssm_parameter" "private_subnet_ids" {
-  name = "/${local.name_prefix}/private_subnet_ids"
+data "aws_ssm_parameter" "db_private_subnet_ids" {
+  name = "/${local.name_prefix}/db_private_subnet_ids"
 }
 
 data "aws_ssm_parameter" "kafa_sg_id" {

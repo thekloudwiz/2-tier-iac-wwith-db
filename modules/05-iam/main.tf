@@ -7,13 +7,13 @@ resource "aws_iam_role" "admin_role" {
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
 }
 
-# Create Assume Role Policy for EC2
-resource "aws_iam_policy" "EC2AssumeRolePolicy" {
-  name        = local.ec2_assume_role_policy_name
-  description = "Assume Role Policy for EC2"
+# # Create Assume Role Policy for EC2
+# resource "aws_iam_policy" "EC2AssumeRolePolicy" {
+#   name        = local.ec2_assume_role_policy_name
+#   description = "Assume Role Policy for EC2"
 
-  policy = file("${path.root}/policies/assume-role.json")
-}
+#   policy = file("${path.root}/policies/assume-role.json")
+# }
 
 # Attach AWS-managed policies
 resource "aws_iam_role_policy_attachment" "admin_managed_ssm" {

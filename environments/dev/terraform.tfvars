@@ -1,11 +1,11 @@
 # AWS Region
-region = "us-west-2"
+region = "eu-west-1"
 
 # Project Name
-project_name = "my-project"
+project_name = "geeky"
 
 # Owner of the resources
-owner = "my-name"
+owner = "kloudwiz"
 
 # Environment name
 environment = "dev"
@@ -15,9 +15,6 @@ managed_by = "terraform"
 
 # VPC CIDR Block
 vpc_cidr = "10.0.0.0/16"
-
-# AWS Key Pair Name
-keypair_name = "my_key_pair"
 
 # Allowed CIDR Blocks
 allowed_cidr_blocks = ["0.0.0.0/0"]
@@ -37,10 +34,13 @@ rds_port = 3306
 outbound_port = 0
 
 # Test Protocol
-test_protocol = "tcp"
+test_protocol = "HTTP"
 
 # Protocol
 protocol = "tcp"
+
+# Target Type
+target_type = "instance"
 
 # ALB HTTPS Port
 alb_https_port = 443
@@ -64,7 +64,7 @@ test_port = 80
 traffic_port = 443
 
 # Traffic Protocol
-traffic_protocol = "tcp"
+traffic_protocol = "HTTPS"
 
 
 # DB Instance Class
@@ -86,13 +86,13 @@ ssm_fullaccess_policy_arn = "arn:aws:iam::aws:policy/AmazonSSMFullAccess"
 ssm_maintenance_window_policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonSSMMaintenanceWindowRole"
 
 # SSM Managed Instance Core Policy ARN
-ssm_managed_instance_core_policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonSSMManagedInstanceCore"
+ssm_managed_instance_core_policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 
 # IAM EC2 SSM Policy ARN
 iam_ec2_ssm_policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 
 # AWS Budgets Actions with SSM Policy ARN
-aws_budgets_actions_with_ssm_policy_arn = "arn:aws:iam::aws:policy/service-role/AWSBudgetsActionsWithSSMPolicy"
+aws_budgets_actions_with_ssm_policy_arn = "arn:aws:iam::aws:policy/AWSBudgetsActionsWithAWSResourceControlAccess"
 
 # EC2 Full Access Policy ARN
 ec2_full_access_policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
@@ -144,14 +144,17 @@ ebs_block_device = {
   encrypted             = true
 }
 
-# Kafka Broker Nodes
-kafka_broker_nodes = 3
+# Kafka Port
+kafka_port = 9092
+
+# Kafka Instance Type
+kafka_instance_type = "kafka.t3.small"
 
 # Kafka Node Type
-kafka_node_type = "kafka.m5.large"
+elasticache_node_type = "cache.t3.small"
 
 # Parameter Group Name
-elasticache_parameter_group_name = "my_parameter_group"
+elasticache_parameter_group_name = "default.redis7"
 
 # Kafka Version
 kafka_version = "2.8.0"
@@ -167,6 +170,3 @@ wildcard_domain_name = "*.thekloudwiz.com"
 
 # ACM Certificate ARN
 iam_cert_name = "portfolio-thekloudwiz-com"
-
-# Kafka Port
-kafka_port = 9092

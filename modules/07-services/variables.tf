@@ -30,12 +30,13 @@ variable "project_name" {
   type        = string
 }
 
-variable "broker_nodes" {
-  description = "Number of broker nodes"
+# Availability Zones Count
+variable "availability_zones_count" {
+  description = "Number of AZs to use"
   type        = number
 }
 
-variable "node_type" {
+variable "elasticache_node_type" {
   description = "Node type for the cluster"
   type        = string
 }

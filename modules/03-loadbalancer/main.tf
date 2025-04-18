@@ -4,7 +4,7 @@ resource "aws_lb_target_group" "alb_target_group" {
   port        = var.health_check_port
   protocol    = var.health_check_protocol
   vpc_id      = data.aws_ssm_parameter.vpc_id.value
-  target_type = "ip"
+  target_type = var.target_type # "instance" or "ip"
 
   health_check {
     path                = "/"

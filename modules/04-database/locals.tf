@@ -14,11 +14,12 @@ locals {
 
 # Local variables for resource names
 locals {
-  db_name              = "${local.name_prefix}-db"
+  db_name              = "${var.project_name}${terraform.workspace}db"
   db_instance_name     = "${local.name_prefix}-db-instance"
   db_subnet_group_name = "${local.name_prefix}-db-subnet-group"
-  secret_name          = "${local.name_prefix}-db-secret"
+  secret_name          = "${local.name_prefix}-db-secret-mng"
   secret_rotation_name = "${local.name_prefix}-db-secret-rotation"
+  db_identifier        = "${local.name_prefix}-db-instance"
 }
 
 # Local variables for DB Credentials
